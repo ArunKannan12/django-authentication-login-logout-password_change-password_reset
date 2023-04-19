@@ -1,0 +1,13 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container{
+    background:linear-gradient(rgba(0, 0, 0, 0.219),rgba(0, 0, 0, 0.808)), url("/static/images/bg.jpg") center center/cover scroll no-repeat;
+    height: 100vh;
+    width: 100%;
+    color: white;
+    
+}

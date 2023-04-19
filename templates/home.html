@@ -1,0 +1,10 @@
+{% extends 'index.html' %}
+{% block content %}
+<h1>welcome</h1>
+<a href="{% url 'logoutpage' %}">logout</a>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{form}}
+</form>
+<h1></h1>{% endblock content %}
