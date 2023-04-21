@@ -4,6 +4,7 @@ from django.contrib.auth.forms import *
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.views import PasswordResetView
+from django.core.exceptions import ValidationError
 
 class CustomUserForm(UserCreationForm):
     username=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'enter user name'}))
@@ -13,6 +14,11 @@ class CustomUserForm(UserCreationForm):
     class Meta:
         model=User
         fields=['username','email','password1','password2']
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("An user with this email already exists!")
+        return email
 
 class UserPasswordResetForm(PasswordResetForm):
     def __init__(self, *args, **kwargs):
