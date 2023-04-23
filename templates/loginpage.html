@@ -11,7 +11,7 @@ login{% endblock title %}
 <div class="container" style="margin-top:10px;height:500px;">
     <div class="row">
         <div class="col-12">
-            <h4 class="mb-3">Login</h4>
+            <h4 class="mb-3" style="font-size:40px;">Login</h4>
             <hr style="border-color:#b8bfc2">
            {% comment %} {% include 'messages.html' %} {% endcomment %}
         </div>
@@ -38,7 +38,8 @@ login{% endblock title %}
                                </div>
                                <button type="submit" class="btn btn-primary">Login</button>
                             </form><br>
-                            <a href="{% url 'password_reset' %}" class="text-danger text-capitalize" style="font-size:15px;text-decoration:none;">forgot password?</a>
+                            <a href="{% url 'password_change' %}"class="text-primary "style="font-size:18px;text-decoration:none;" >change password</a>
+                            <a href="{% url 'password_reset' %}" class="text-danger text-capitalize" style="font-size:15px;text-decoration:none;margin-left:10px">forgot password?</a>
                             <p class="my-2">Dont't have an account? <a href="{% url 'signinpage' %}" class="text-primary text-capitalize" style="font-size:18px;text-decoration:none;">register</a></p>
                         </div>
                     </div>

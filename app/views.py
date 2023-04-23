@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect,HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
+from django.urls import reverse_lazy
 from .models import *
 from django.contrib.auth import login,authenticate,logout
 from django.shortcuts import render,redirect
@@ -15,7 +16,7 @@ def signinpage(request):
         if form.is_valid():
             form.save()
             user=form.cleaned_data.get('username')
-            messages.success(request,"registration successfull 🤩 "  + user)
+            messages.success(request,user + ",your registration is successfull 🤩 ")
             return redirect('loginpage')
     context={
         'form':form
@@ -24,7 +25,7 @@ def signinpage(request):
 def loginpage(request):
    
     if request.method == 'POST':
-        uname=request.POST.get('username')
+        uname=request.POST.get('username').lower()
         pass1=request.POST.get('password')
         user=authenticate(request,username=uname,password=pass1)
         if user is not None:

@@ -1,9 +1,7 @@
-from django.forms import ModelForm
 from .models import *
 from django.contrib.auth.forms import *
 from django.contrib.auth.models import User
 from django import forms
-from django.contrib.auth.views import PasswordResetView
 from django.core.exceptions import ValidationError
 
 class CustomUserForm(UserCreationForm):
@@ -54,3 +52,39 @@ class UserSetPasswordForm(SetPasswordForm):
         'style':'width:500px;height:50px;border-radius:10px;border:2px skyblue solid;'
         
     }))
+class changepassword(PasswordChangeForm): 
+    def __init__(self, *args, **kwargs):
+        super(changepassword, self).__init__(*args, **kwargs)
+    error_messages={
+        **SetPasswordForm.error_messages,
+        'password_incorrect': ("your old password was entered incorrectly. Please enter it again "),
+    }
+    old_password=forms.CharField(label=("old password"),strip=False,widget=forms.PasswordInput(attrs={'class': 'form-control',
+        'placeholder': 'Enter your old Password',
+        'type': 'password',
+        'name': 'old_password',
+        'autocomplete':'current-password',
+        'style':'width:500px;height:50px;border-radius:10px;border:2px skyblue solid;',
+        'autofocus':True}))
+    new_password1=forms.CharField(label=("new password1"),strip=False,widget=forms.PasswordInput(attrs={'class': 'form-control',
+        'placeholder': 'Enter your new Password',
+        'type': 'password',
+        'name': 'new_password1',
+        'autocomplete':'current-password',
+        'style':'width:500px;height:50px;border-radius:10px;border:2px skyblue solid;',
+        'autofocus':True}))
+    new_password2=forms.CharField(label=("new password2"),strip=False,widget=forms.PasswordInput(attrs={'class': 'form-control',
+        'placeholder': 'Re-enter your new Password',
+        'type': 'password',
+        'name': 'new_password2',
+        'autocomplete':'current-password',
+        'style':'width:500px;height:50px;border-radius:10px;border:2px skyblue solid;',
+        'autofocus':True}))
+    def clean_old_password(self):
+        old_password=self.cleaned_data['old_password']
+        if not self.user.check_password(old_password):
+            raise ValidationError(
+                self.error_messages['password_incorrect'],
+                code='password_incorrect',
+            )
+        return old_password
